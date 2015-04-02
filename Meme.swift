@@ -10,10 +10,11 @@ import Foundation
 import UIKit
 
 class Meme: NSObject {
-    var topText: String?
-    var bottomText: String?
-    var image: UIImage?
-    var memedImage: UIImage?
+    let topText: String
+    let bottomText: String
+    let image: UIImage
+    let memedImage: UIImage
+    
     init(bottomText: String, topText: String, image: UIImage, memedImage: UIImage) {
         self.bottomText = bottomText
         self.topText = topText

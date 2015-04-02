@@ -159,8 +159,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func save() {
-        let memedImage = generateMemedImage()
-        var meme = Meme(bottomText: textField.text!, topText: bottomTextField.text!, image: imageView.image!, memedImage: memedImage)
+        //let memedImage = generateMemedImage()
+        var meme = Meme(bottomText: textField.text!, topText: bottomTextField.text!, image: imageView.image!, memedImage:self.memedImage!)
         (UIApplication.sharedApplication().delegate as AppDelegate).memes.append(meme)
     }
     
@@ -174,7 +174,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let memedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         // save the Memed image
-        self.save()
         
         // Show tool and nav bar
         self.showHideBars(false)
@@ -189,12 +188,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
 
     @IBAction func cancelButtonTapped(sender: UIBarButtonItem) {
-        let img = generateMemedImage()
-        self.imageView.image = img
-    }
+        self.memedImage = generateMemedImage()
+        self.save()
+        self.imageView.image = self.memedImage    }
     
     @IBAction func testHiddenTapped(sender: UIButton) {
-       
+       println("Thing was tapped")
     }
     
     
