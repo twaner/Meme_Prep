@@ -11,16 +11,18 @@ import UIKit
 class MemedCollectionViewController: UIViewController, UICollectionViewDataSource {
 
     var memedImages: [Meme]!
+    @IBOutlet weak var collectionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
+        memedImages = (UIApplication.sharedApplication().delegate as AppDelegate).memes
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        memedImages = (UIApplication.sharedApplication().delegate as AppDelegate).memes
+//        memedImages = (UIApplication.sharedApplication().delegate as AppDelegate).memes
+        self.collectionView.reloadData()
         println(memedImages.count)
         
     }
@@ -40,30 +42,22 @@ class MemedCollectionViewController: UIViewController, UICollectionViewDataSourc
         } else {
             rows = 0
         }
-        return 1
+        return rows
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as MemeCollectionViewCell
         let meme = self.memedImages[indexPath.row]
-        cell.memeImage.image = meme.image
+        cell.memeImage.image = meme.memedImage
         return cell
-//        let meme = memedImages[indexPath.row]
-//        cell.textLabel?.text = meme.topText
-//        cell.imageView?.image = meme.memedImage
-//        return cell
-
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath:NSIndexPath)
+    {
+        let controller = self.storyboard?.instantiateViewControllerWithIdentifier("MemeDetailViewController")! as MemeDetailViewController
+        let meme = memedImages[indexPath.row]
+        controller.meme = meme
+        self.navigationController?.pushViewController(controller, animated: true)
+        
     }
-    */
-
 }

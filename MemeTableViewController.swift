@@ -11,23 +11,21 @@ import UIKit
 class MemeTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var memedImages: [Meme]!
+    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        let object = UIApplication.sharedApplication().delegate
-//        let appDelegate = object as AppDelegate
-//        memedImages = appDelegate.memes
-
         // Do any additional setup after loading the view.
+        self.memedImages = (UIApplication.sharedApplication().delegate as AppDelegate).memes
     }
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        let object = UIApplication.sharedApplication().delegate
-        let appDelegate = object as AppDelegate
-        memedImages = appDelegate.memes
-//        memedImages = (UIApplication.sharedApplication().delegate as AppDelegate).memes
         
+//        let object = UIApplication.sharedApplication().delegate
+//        let appDelegate = object as AppDelegate
+//        self.memedImages = (UIApplication.sharedApplication().delegate as AppDelegate).memes
+        self.tableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -56,7 +54,10 @@ class MemeTableViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+        let controller = self.storyboard?.instantiateViewControllerWithIdentifier("MemeDetailViewController")! as MemeDetailViewController
+        let meme = memedImages[indexPath.row]
+        controller.meme = meme
+        self.navigationController?.pushViewController(controller, animated: true)
     }
     
     /*
